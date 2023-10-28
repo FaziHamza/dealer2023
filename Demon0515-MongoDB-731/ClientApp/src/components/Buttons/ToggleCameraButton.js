@@ -91,7 +91,26 @@ const ToggleCameraButton = () => {
         >
           <i className="bi bi-camera-video-off h4"></i>
         </button>
-
+        
+        {currentPlayer.IsRealTimeChatForMic ? (
+          // Render this if IsRealTimeChatForMic is true
+          <button
+            className="btn ml-1 mt-1 stencil"
+            style={{ color: "white" }}
+            onClick={() => handleWebMic(false)}
+          >
+            <i className="bi bi-mic-fill h4"></i>
+          </button>
+        ) : (
+          // Render this if IsRealTimeChatForMic is false
+          <button 
+            className="btn ml-1 mt-1 stencil"
+            style={{ color: "white" }}
+            onClick={() => handleWebMic(true)}
+          >
+            <i className="bi bi-mic-mute-fill h4"></i>
+          </button>
+        )}
       </>
     );
   else if (currentPlayer.IsRealTimeChat)
