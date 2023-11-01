@@ -397,13 +397,13 @@ const MainGame = ({ isVideoChatAllowed = false }) => {
       setSettlementModalEndGameOpen(true);
     });
 
-    connection.on("ToggleCamera", (index,status) => {
+    // connection.on("ToggleCamera", (index,status) => {
       
-      // debugger;
-      console.log("Toggle  02 ToggleCamera connection signalR ", index);
-      // dispatch(toggleCamera(index));
-      dispatch(handleCamera({ index, value: status }));
-    });
+    //    debugger;
+    //   console.log("Toggle  02 ToggleCamera connection signalR ", index);
+    //   // dispatch(toggleCamera(index));
+    //   //dispatch(handleCamera({ index, value: status }));
+    // });
 
     connection.on("DealCards", (DealCards, action) => {
       dispatch(
@@ -445,7 +445,7 @@ const MainGame = ({ isVideoChatAllowed = false }) => {
       connection.off("Sit_out");
       connection.off("Rejoin");
       connection.off("Endgame");
-      connection.off("ToggleCamera");
+      //connection.off("ToggleCamera");
       connection.off("DealCards");
       connection.off("PassDeal");
       connection.off("ReceiveAlertNotifictionVideo");

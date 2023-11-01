@@ -971,20 +971,20 @@ namespace PersonalizedCardGame.Controllers
 
                 await _GameStateService.UpdateAsync(gameHash.Id!, gameHash);
 
-                // Create a list to store the tasks
-                var notificationTasks = new List<Task>();
+                //// Create a list to store the tasks
+                //var notificationTasks = new List<Task>();
 
-                foreach (var player in gameHash.ActivePlayers)
-                {
-                    if (player.PlayerId != model.UserId)
-                    {
-                        // Add the task to send the notification to the list
-                        notificationTasks.Add(_HubContext.Clients.Client(player.ConnectionId).SendAsync("ToggleCamera", model.Index!, model.Status));
-                    }
-                }
+                //foreach (var player in gameHash.ActivePlayers)
+                //{
+                //    if (player.PlayerId != model.UserId)
+                //    {
+                //        // Add the task to send the notification to the list
+                //        notificationTasks.Add(_HubContext.Clients.Client(player.ConnectionId).SendAsync("ToggleCamera", model.Index!, model.Status));
+                //    }
+                //}
 
-                // Await all notification tasks to ensure they all complete
-                await Task.WhenAll(notificationTasks);
+                //// Await all notification tasks to ensure they all complete
+                //await Task.WhenAll(notificationTasks);
 
                 return true;
             }
@@ -1002,20 +1002,20 @@ namespace PersonalizedCardGame.Controllers
                 gameHash.ActivePlayers[model.Index].IsRealTimeChatForMic = model.Status;
                 await _GameStateService.UpdateAsync(gameHash.Id!, gameHash);
 
-                // Create a list to store the tasks
-                var notificationTasks = new List<Task>();
+                //// Create a list to store the tasks
+                //var notificationTasks = new List<Task>();
 
-                foreach (var player in gameHash.ActivePlayers)
-                {
-                    if (player.PlayerId != model.UserId)
-                    {
-                        // Add the task to send the notification to the list
-                        notificationTasks.Add(_HubContext.Clients.Client(player.ConnectionId).SendAsync("ToggleMic", model.Index!, model.Status));
-                    }
-                }
+                //foreach (var player in gameHash.ActivePlayers)
+                //{
+                //    if (player.PlayerId != model.UserId)
+                //    {
+                //        // Add the task to send the notification to the list
+                //        notificationTasks.Add(_HubContext.Clients.Client(player.ConnectionId).SendAsync("ToggleMic", model.Index!, model.Status));
+                //    }
+                //}
 
-                // Await all notification tasks to ensure they all complete
-                await Task.WhenAll(notificationTasks);
+                //// Await all notification tasks to ensure they all complete
+                //await Task.WhenAll(notificationTasks);
 
                 return true;
             }
