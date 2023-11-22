@@ -48,19 +48,23 @@ const ParticipantView = ({ participantId }) => {
   return (
     <div className="player-wrapper">
       <audio ref={micRef} autoPlay muted={meetingAPI.isLocal} />
-      <ReactPlayer
-        playsinline
-        pip={false}
-        light={false}
-        controls={false}
-        muted={true}
-        playing={true}
-        url={videoStream}
-        className="react-player"
-        onError={(err) => {
-          console.log(err, "participant video error");
-        }}
-      />
+      {videoStream ? (
+        <ReactPlayer
+          playsinline
+          pip={false}
+          light={false}
+          controls={false}
+          muted={true}
+          playing={true}
+          url={videoStream}
+          className="react-player"
+          onError={(err) => {
+            console.log(err, "participant video error");
+          }}
+        />
+      ) : (
+        <div>No video available</div>
+      )}
     </div>
   );
 };
@@ -160,28 +164,36 @@ const Player = ({ ptr }) => {
       <div>
         <div className="row m-0 p-1">
           <div
-            className={`PlayerName col${gameState.DealerId === Player.PlayerId ? " green" : ""}`}
+            className={`PlayerName col${
+              gameState.DealerId === Player.PlayerId ? " green" : ""
+            }`}
             onClick={() =>
               setToggleRemoveButtonVisible(!toggleRemoveButtonVisible)
             }
           >
-            <div className="PlayerDealer">
-              {Player.PlayerName}
-            </div>
+            <div className="PlayerDealer">{Player.PlayerName}</div>
+            {gameState.GameCreatorId === user.Id && (
+              <span
+                className="PlayerStatusNet col-auto px-2 my-auto mx-2 btn"
+                onClick={() => RemovePlayer(Player)}
+              >
+                <i class="bi bi-trash"></i>
+              </span>
+            )}
             <span className="PlayerStatusNet col-auto px-2 my-auto">
               {Player.PlayerNetStatusFinal + Player.PlayerAmount}
             </span>
             {Player.PlayerId === gameState.DealerId && (
-              <span className="PlayerStatusNet col-auto px-2 my-auto dealerIconStyle" >
+              <span className="PlayerStatusNet col-auto px-2 my-auto dealerIconStyle">
                 D
               </span>
             )}
           </div>
-          {gameState.GameCreatorId === user.Id && toggleRemoveButtonVisible && (
+          {/* {gameState.GameCreatorId === user.Id && toggleRemoveButtonVisible && (
             <button className="btn" onClick={() => RemovePlayer(Player)}>
               Remove {Player.PlayerName}
             </button>
-          )}
+          )} */}
         </div>
         <div
           id={"Player" + ptr}

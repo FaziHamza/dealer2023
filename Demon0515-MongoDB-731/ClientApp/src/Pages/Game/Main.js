@@ -238,7 +238,10 @@ const MainGame = ({ isVideoChatAllowed = false }) => {
         })
       );
     });
-
+    connection.on("Other_Disconnected", (UserId, ConnectionId) => {
+      alert("Your Session Is Closed Due To Joining the Game In Other Browser");
+      navigator("/");
+    });
     connection.on(
       "Other_Joined",
       (userId, playerImage, userName, connectionId) => {
@@ -425,6 +428,7 @@ const MainGame = ({ isVideoChatAllowed = false }) => {
     });
     return () => {
       connection.off("Other_Connected");
+      connection.off("Other_Disconnected");
       connection.off("Other_Joined");
       connection.off("PassCard");
       connection.off("Player_Left");

@@ -189,6 +189,10 @@ namespace PersonalizedCardGame.Controllers
                         {
                             notificationTasks.Add(_HubContext.Clients.Client(player.ConnectionId).SendAsync("Other_Connected", model.UserId!, model.ConnectionId!));
                         }
+                        if (player.PlayerId == model.UserId)
+                        {
+                            notificationTasks.Add(_HubContext.Clients.Client(player.ConnectionId).SendAsync("Other_Disconnected", model.UserId!, model.ConnectionId!));
+                        }
                     }
                 }
                 else
