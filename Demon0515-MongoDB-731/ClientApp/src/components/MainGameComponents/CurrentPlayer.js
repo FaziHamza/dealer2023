@@ -14,7 +14,7 @@ import ReturnToDeckButton from "../Buttons/ReturnToDeckButton";
 import { useDispatch, useSelector } from "react-redux";
 import { PassCards } from "../../common/game/GameControl";
 import { passCard } from "../../slice/gameStateSlice";
-
+import DefaultPlayer from "../../components/MainGameComponents/DefaultPlayer";
 const CurrentPlayerDiv = () => {
   //const [CardActionsVisible, setCardActionsVisible] = useState(true);
   const dispatch = useDispatch();
@@ -178,11 +178,12 @@ const CurrentPlayerDiv = () => {
             </div>
             <ShowButton />
             <AddToPotButton BetTakeValueRef={BetTakeValueRef} />
-            {selectedCards.length === 0 && (
+            {/* {selectedCards.length === 0 && (
               <>
                 <TakeButton BetTakeValueRef={BetTakeValueRef} />
               </>
-            )}
+            )} */}
+            <TakeButton BetTakeValueRef={BetTakeValueRef} />
             <DiscardButton />
             <ReturnToDeckButton />
           </div>

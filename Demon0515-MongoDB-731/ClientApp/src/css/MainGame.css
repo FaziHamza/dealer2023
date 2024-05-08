@@ -987,7 +987,9 @@ div#potdiv {
 }
 
 .react-player video {
-  height: 242px !important;
+  /* height: 242px !important; */
+  width: 100% !important;
+  height: 100% !important;
 }
 
 .PlayerDealer {

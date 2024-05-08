@@ -54,6 +54,7 @@ const ToggleCameraButton = () => {
       console.log("check status and DB camera value ==>  camera off, need to On");
       meetingAPI.enableWebcam();
     } else {
+      console.log("Camera Off");
       meetingAPI.disableWebcam();
     }
 
@@ -69,6 +70,8 @@ const ToggleCameraButton = () => {
       meetingAPI.unmuteMic();
     } else {
       meetingAPI.muteMic();
+      console.log("Mic Off");
+
     }
 
     ToggleMic(user.Id, gameState.GameCode, currentIndex,status, () => {

@@ -12,8 +12,8 @@ import CurrentPlayerDiv from "../../components/MainGameComponents/CurrentPlayer"
 import DealerPanel from "../../components/MainGameComponents/DealerPanel";
 import GameControlPanel from "../../components/MainGameComponents/GameControlPanel";
 import LogRocket from "../../util/LogRocketUtil";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   MeetingProvider,
   MeetingConsumer,
@@ -51,7 +51,8 @@ import {
 } from "../../slice/gameStateSlice";
 import {
   decreaseVideoMinutes,
-  startConnectionWithGameCodeAndUserId,decreaseVideoMinutesRuntime
+  startConnectionWithGameCodeAndUserId,
+  decreaseVideoMinutesRuntime,
 } from "../../common/game/GameControl";
 import SettlementModalEndGame from "../../components/Dialogs/SettlementModalEndGame";
 import { setMeetingJoined, setVideoTime } from "../../slice/authSlice";
@@ -88,11 +89,11 @@ const MainGame = ({ isVideoChatAllowed = false }) => {
     };
   });
 
-  const preventrefresh =((e)=>{
+  const preventrefresh = (e) => {
     e.preventDefault();
-    e.returnValue= "data will get lost";
+    e.returnValue = "data will get lost";
     return e.returnValue; // Return the value
-  });
+  };
 
   useEffect(() => {
     window.addEventListener("beforeunload", preventrefresh);
@@ -100,7 +101,7 @@ const MainGame = ({ isVideoChatAllowed = false }) => {
     return () => {
       window.removeEventListener("beforeunload", preventrefresh);
     };
-  }, );
+  });
   // start connection with user.Id
   useEffect(() => {
     const startConnection = async () => {
@@ -120,7 +121,7 @@ const MainGame = ({ isVideoChatAllowed = false }) => {
           ConnectionId: newConnection.connectionId,
         },
       }).then((result) => {
-        console.log("resultdat",  result?.data);
+        console.log("resultdat", result?.data);
         if (result.data === null || result.data === "") {
           alert(
             "Can't join game because of wrong game code, game is locked or didn't get invite"
@@ -152,39 +153,72 @@ const MainGame = ({ isVideoChatAllowed = false }) => {
       dispatch(setMeetingJoined(true));
       // meetingAPI.unmuteMic();
       // meetingAPI.enableWebcam();
-      if (stateRef.current.isCreator) { 
+      if (stateRef.current.isCreator) {
         let intervalId = setInterval(async () => {
-          console.log("Outside===Open")
-          decreaseVideoMinutesRuntime(stateRef.current.gameHash, dispatch, setVideoTime);
-          console.log(`${stateRef.current.minutes} stateRef.current.minutes +${stateRef.current.gameHash.ActivePlayers.length} stateRef.current.gameHash.ActivePlayers.length`)
-          console.log(stateRef.current.minutes + stateRef.current.gameHash.ActivePlayers.length)
-          console.log(`${parseInt(stateRef.current.asset.Tokens)} parseInt(stateRef.current.asset.Tokens)-${parseInt(10 * stateRef.current.gameHash.ActivePlayers.length)} parseInt(10 * stateRef.current.gameHash.ActivePlayers.length)`)
-          console.log(parseInt(stateRef.current.asset.Tokens)- parseInt(10 * stateRef.current.gameHash.ActivePlayers.length))
-          console.log("Outside===Closed")
+          console.log("Outside===Open");
+          decreaseVideoMinutesRuntime(
+            stateRef.current.gameHash,
+            dispatch,
+            setVideoTime
+          );
+          console.log(
+            `${stateRef.current.minutes} stateRef.current.minutes +${stateRef.current.gameHash.ActivePlayers.length} stateRef.current.gameHash.ActivePlayers.length`
+          );
+          console.log(
+            stateRef.current.minutes +
+              stateRef.current.gameHash.ActivePlayers.length
+          );
+          console.log(
+            `${parseInt(
+              stateRef.current.asset.Tokens
+            )} parseInt(stateRef.current.asset.Tokens)-${parseInt(
+              10 * stateRef.current.gameHash.ActivePlayers.length
+            )} parseInt(10 * stateRef.current.gameHash.ActivePlayers.length)`
+          );
+          console.log(
+            parseInt(stateRef.current.asset.Tokens) -
+              parseInt(10 * stateRef.current.gameHash.ActivePlayers.length)
+          );
+          console.log("Outside===Closed");
           if (
             stateRef.current.minutes +
               stateRef.current.gameHash.ActivePlayers.length >=
             parseInt(stateRef.current.asset.Tokens) -
               parseInt(10 * stateRef.current.gameHash.ActivePlayers.length)
           ) {
-            console.log("Inside===Open")
-            console.log(`${stateRef.current.minutes} stateRef.current.minutes +${stateRef.current.gameHash.ActivePlayers.length} stateRef.current.gameHash.ActivePlayers.length`)
-            console.log(stateRef.current.minutes + stateRef.current.gameHash.ActivePlayers.length)
-            console.log(`${parseInt(stateRef.current.asset.Tokens)} parseInt(stateRef.current.asset.Tokens)-${parseInt(10 * stateRef.current.gameHash.ActivePlayers.length)} parseInt(10 * stateRef.current.gameHash.ActivePlayers.length)`)
-            console.log(parseInt(stateRef.current.asset.Tokens)- parseInt(10 * stateRef.current.gameHash.ActivePlayers.length))
-            console.log("Inside===Closed")
+            console.log("Inside===Open");
+            console.log(
+              `${stateRef.current.minutes} stateRef.current.minutes +${stateRef.current.gameHash.ActivePlayers.length} stateRef.current.gameHash.ActivePlayers.length`
+            );
+            console.log(
+              stateRef.current.minutes +
+                stateRef.current.gameHash.ActivePlayers.length
+            );
+            console.log(
+              `${parseInt(
+                stateRef.current.asset.Tokens
+              )} parseInt(stateRef.current.asset.Tokens)-${parseInt(
+                10 * stateRef.current.gameHash.ActivePlayers.length
+              )} parseInt(10 * stateRef.current.gameHash.ActivePlayers.length)`
+            );
+            console.log(
+              parseInt(stateRef.current.asset.Tokens) -
+                parseInt(10 * stateRef.current.gameHash.ActivePlayers.length)
+            );
+            console.log("Inside===Closed");
             setVideoMinutesRunoutModalOpen(true);
-             await startConnectionWithGameCodeAndUserId(
-              GameCode,
-              user.Id
-            ).then((result) => {
-              console.log(result);
-             // result.invoke
-              result.invoke('AlertNotifictionVideo', 'video will end in 2 minutes. the game will stay active.the host may purchase more video credits to continue')
-              .catch(err => console.error(err));
-
-            })
-           
+            await startConnectionWithGameCodeAndUserId(GameCode, user.Id).then(
+              (result) => {
+                console.log(result);
+                // result.invoke
+                result
+                  .invoke(
+                    "AlertNotifictionVideo",
+                    "video will end in 2 minutes. the game will stay active.the host may purchase more video credits to continue"
+                  )
+                  .catch((err) => console.error(err));
+              }
+            );
           }
 
           //calculate estimated minutes
@@ -223,11 +257,10 @@ const MainGame = ({ isVideoChatAllowed = false }) => {
       meetingAPI.leave();
     });
 
-    if(!stateRef.current.isCreator)
-    {
-      connection.on('ReceiveAlertNotifictionVideo', (message) => {    
-         toast(message);
-    });
+    if (!stateRef.current.isCreator) {
+      connection.on("ReceiveAlertNotifictionVideo", (message) => {
+        toast(message);
+      });
     }
 
     connection.on("Other_Connected", (UserId, ConnectionId) => {
@@ -401,7 +434,7 @@ const MainGame = ({ isVideoChatAllowed = false }) => {
     });
 
     // connection.on("ToggleCamera", (index,status) => {
-      
+
     //    debugger;
     //   console.log("Toggle  02 ToggleCamera connection signalR ", index);
     //   // dispatch(toggleCamera(index));
@@ -477,8 +510,7 @@ const MainGame = ({ isVideoChatAllowed = false }) => {
                 style={{ position: "fixed:", zIndex: 400, width: "60%" }}
               ></div>
               <div id="table">
-              <div className="row">
-                </div>
+                <div className="row"></div>
                 <div className="row">
                   <div className="col-4 seat">
                     <Player ptr={3} dealerId={gameState.DealerId} />
@@ -502,9 +534,13 @@ const MainGame = ({ isVideoChatAllowed = false }) => {
                   </div>
                 </div>
                 <div className="row text-center mx-2 mt-2 mb-2">
-                  <CurrentPlayerDiv />
+                  <div className="col-10">
+                    <CurrentPlayerDiv />
+                  </div>
+                  <div className="col-2">
+                    <DefaultPlayer ptr={1} />
+                  </div>
                 </div>
-              
               </div>
               <div className="row">
                 <div className="text-center mx-auto col-12 text-center card bg-secondary align-self-center">
@@ -513,9 +549,6 @@ const MainGame = ({ isVideoChatAllowed = false }) => {
               </div>
               <div className="row">
                 <GameControlPanel isMeetingJoined={isMeetingJoined} />
-              </div>
-              <div className="col-12 seat " style={{"justify-content": "end","display": "flex"}}>
-                    <DefaultPlayer ptr={1} />
               </div>
             </div>
           </div>
